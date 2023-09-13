@@ -1,0 +1,101 @@
+[
+  {
+    "version" : 1
+  },
+  {
+    "action" : {
+      "script" : "git reset --hard origin/${ref}",
+      "showOutput" : true,
+      "type" : "sh",
+      "waitForExit" : true
+    },
+    "name" : "Clear All Local Changes and Commits ",
+    "refTargets" : [
+      "localbranch"
+    ],
+    "target" : "ref"
+  },
+  {
+    "action" : {
+      "args" : "-c 'echo $sha | clip'",
+      "path" : "$sh",
+      "showOutput" : false,
+      "type" : "process",
+      "waitForExit" : false
+    },
+    "name" : "Copy Commit Abbreviated SHA",
+    "target" : "revision"
+  },
+  {
+    "action" : {
+      "script" : "git log --merges $SHA..",
+      "showOutput" : true,
+      "type" : "sh",
+      "waitForExit" : true
+    },
+    "name" : "Find merge commit",
+    "target" : "revision"
+  },
+  {
+    "action" : {
+      "script" : "git log --merges --first-parent --oneline --pretty=\"format:%h %ar %s\"",
+      "showOutput" : true,
+      "type" : "sh",
+      "waitForExit" : true
+    },
+    "name" : "Last Merge",
+    "refTargets" : [
+      "localbranch",
+      "remotebranch"
+    ],
+    "target" : "ref"
+  },
+  {
+    "action" : {
+      "script" : "git reflog ${ref} | tail -n 1 ",
+      "showOutput" : true,
+      "type" : "sh",
+      "waitForExit" : true
+    },
+    "name" : "Link Branch",
+    "refTargets" : [
+      "localbranch",
+      "remotebranch"
+    ],
+    "target" : "ref"
+  },
+  {
+    "action" : {
+      "script" : "git reset --soft origin/${ref}",
+      "showOutput" : true,
+      "type" : "sh",
+      "waitForExit" : true
+    },
+    "name" : "Revert Commits",
+    "refTargets" : [
+      "localbranch"
+    ],
+    "target" : "ref"
+  },
+  {
+    "action" : {
+      "script" : "git tag -l | xargs git tag -d\ngit fetch",
+      "showOutput" : false,
+      "type" : "sh",
+      "waitForExit" : true
+    },
+    "name" : "Update Tags",
+    "target" : "repository"
+  },
+  {
+    "action" : {
+      "args" : "branch -a -r --contains $SHA",
+      "path" : "$git",
+      "showOutput" : true,
+      "type" : "process",
+      "waitForExit" : true
+    },
+    "name" : "Which branches contain this commit",
+    "target" : "revision"
+  }
+]
