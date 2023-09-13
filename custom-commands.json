@@ -9,7 +9,7 @@
       "type" : "sh",
       "waitForExit" : true
     },
-    "name" : "Clear All Local Changes and Commits ",
+    "name" : "Reset Hard",
     "refTargets" : [
       "localbranch"
     ],
@@ -71,7 +71,7 @@
       "type" : "sh",
       "waitForExit" : true
     },
-    "name" : "Revert Commits",
+    "name" : "Reset Soft",
     "refTargets" : [
       "localbranch"
     ],
