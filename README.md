@@ -1,2 +1,2 @@
 # ForkCustomCommands
-Repo with Fork custom commands I use
+Repo with Git Fork custom commands I use
