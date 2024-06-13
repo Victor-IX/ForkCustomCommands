@@ -79,6 +79,19 @@
   },
   {
     "action" : {
+      "script" : "git reset --mixed origin/${ref}",
+      "showOutput" : true,
+      "type" : "sh",
+      "waitForExit" : true
+    },
+    "name" : "Reset Mixed",
+    "refTargets" : [
+      "localbranch"
+    ],
+    "target" : "ref"
+  },
+  {
+    "action" : {
       "script" : "git tag -l | xargs git tag -d\ngit fetch",
       "showOutput" : false,
       "type" : "sh",
